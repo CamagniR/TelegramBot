@@ -28,15 +28,14 @@ public class TelegramBot {
 
     
         if (testo.contains("/citta")==true ) {
-            oggetto.sendMessage("inserisci la città da cercare", idDestinatario);
+            //oggetto.sendMessage("inserisci la città da cercare", idDestinatario);
+            testo  = testo.replace("/citta", ""); 
+            testo=testo.trim();
+            OpenStreetMap tmp=new OpenStreetMap();
+            tmp.getInfo(testo);
            
         }
-        if(!testo.equals("/citta"))
-        {
-                System.out.println(testo);
-                OpenStreetMap tmp=new OpenStreetMap();
-                tmp.getInfo(testo);
-        }
+     
         
     
         
