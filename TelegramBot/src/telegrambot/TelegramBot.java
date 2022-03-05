@@ -26,8 +26,8 @@ public class TelegramBot {
         int idMessaggio=oggetto.getMessageID();
         
 
-        
-        if (testo.equals("/citta") ) {
+    
+        if (testo.contains("/citta")==true ) {
             oggetto.sendMessage("inserisci la città da cercare", idDestinatario);
            
         }
