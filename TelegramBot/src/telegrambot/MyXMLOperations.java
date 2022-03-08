@@ -79,9 +79,19 @@ public class MyXMLOperations {
         
         Place place = null;
         NodeList nodelist;
+        place = new Place();
+        
+        String lati = element.getAttribute("lat");
+        if ((!"".equals(lati))) {       
+          place.setLatitudine(lati);
+        }
+        String longi = element.getAttribute("lon");
+        if ((!"".equals(longi))) {            
+          place.setLongitudine(longi);
+        }
         String str = element.getAttribute("display_name");
         if ((!"".equals(str))) {   
-          place = new Place();  
+        
           place.setDisplay_name(str);
         }
         nodelist=element.getElementsByTagName("amenity");

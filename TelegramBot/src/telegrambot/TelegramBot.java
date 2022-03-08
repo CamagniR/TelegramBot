@@ -31,23 +31,29 @@ public class TelegramBot {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        
-        Utilities oggetto = new Utilities();
-        String testo=oggetto.getText();
-        int idDestinatario=oggetto.getID();
-        int idMessaggio=oggetto.getMessageID();
-        
-
-    
-        if (testo.contains("/citta")==true ) {
-            //oggetto.sendMessage("inserisci la città da cercare", idDestinatario);
-            testo  = testo.replace("/citta", ""); 
-            testo=testo.trim();
-            OpenStreetMap tmp=new OpenStreetMap();
-           // tmp.getInfo(testo);
+       
+        while(true)
+        {
+           ThreadAscolto th1= new ThreadAscolto();
+           th1.start();
+            try {
+                th1.join();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TelegramBot.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                th1.sleep(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TelegramBot.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+               
+          
            
            
-            BufferedReader in = null;
+           
+       /*    
+        BufferedReader in = null;
         PrintWriter out;
         
         try {
@@ -72,7 +78,7 @@ public class TelegramBot {
         MyXMLOperations xml = new MyXMLOperations();
         // String xsd = "xml/grammatica.xsd";
         String xmlFile = "xml/Place.xml";
-        
+        String invio="";
         try {
             List<Place> dati = new ArrayList<>();
             dati = xml.parseDocument(xmlFile);
@@ -80,7 +86,17 @@ public class TelegramBot {
             System.out.println("---------------------------------------------------");
             for (int i = 0; i < dati.size(); i++) {
                 Place info = dati.get(i);
+               
+                
+                
+                invio="Luogo "+info.getDisplay_name()+"\n"+"Latitudine "+ info.getLatitudine()+"\n"+"Longitudine "+info.getLongitudine()+"\n";
+                oggetto.sendMessage(invio, idDestinatario);
+                
+                
+                /*
                 System.out.println("nome "+info.getDisplay_name());
+                System.out.println("Latitudine "+info.getLatitudine());
+                System.out.println("Longitudine "+info.getLongitudine());
                 System.out.println("amenity "+info.getAmenity());
                 System.out.println("building "+ info.getBuilding());
                 System.out.println("house_number "+ info.getHouse_number() );
@@ -92,20 +108,17 @@ public class TelegramBot {
                 System.out.println("postcode "+ info.getPostcode());
                 System.out.println("country "+ info.getCountry());
                 System.out.println("country_code "+info.getCountry_code());
+                */
+       /*
                 System.out.println("---------------------------------------------------");
             }
             System.out.println("---------------------------------------------------");
         } catch (ParserConfigurationException | SAXException | IOException exception) {
             System.out.println(exception);
         }
-           
+               */
         }
      
-        
-    
-        
-
-        
-    }
-    
+   
 }
+        

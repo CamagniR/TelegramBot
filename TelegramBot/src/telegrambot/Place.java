@@ -13,6 +13,9 @@ public class Place {
     
     //attributi
     private String display_name;
+    private String latitudine;
+    private String longitudine;
+    
     //elementi
     private String amenity;
     private String road;
@@ -41,9 +44,13 @@ public class Place {
         building = "";
         house_number = "";
         village="";
+        latitudine="";
+        longitudine="";
     }
 
-    public Place(String display_name,String amenity, String road, String town, String county, String state, String postcode, String country, String country_code, String building, String house_number,String village) {
+    public Place(String latitudine, String longitudine,String display_name,String amenity, String road, String town, String county, String state, String postcode, String country, String country_code, String building, String house_number,String village) {
+        this.latitudine=latitudine;
+        this.longitudine=longitudine;
         this.display_name=display_name;
         this.amenity = amenity;
         this.road = road;
@@ -64,6 +71,14 @@ public class Place {
 
     public String getVillage() {
         return village;
+    }
+
+    public String getLatitudine() {
+        return latitudine;
+    }
+
+    public String getLongitudine() {
+        return longitudine;
     }
 
     public void setAmenity(String amenity) {
@@ -152,6 +167,14 @@ public class Place {
 
     public String getHouse_number() {
         return house_number;
+    }
+
+    public void setLatitudine(String latitudine) {
+        this.latitudine = latitudine;
+    }
+
+    public void setLongitudine(String longitudine) {
+        this.longitudine = longitudine;
     }
     
     

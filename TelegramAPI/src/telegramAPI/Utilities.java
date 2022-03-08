@@ -30,7 +30,7 @@ import org.xml.sax.SAXException;
  *
  * @author camagni_riccardo
  * https://api.telegram.org/bot5122281672:AAHK1whl7VGxCdHszxOYBR8UwtD07SFadvg/getMe uri bot
- * 
+ * https://api.telegram.org/bot5122281672:AAHK1whl7VGxCdHszxOYBR8UwtD07SFadvg/getUpdates?offset=881949579 scarta tutto quello che c'è pruima e aspetta un nuov messaggio
  */
 public class Utilities {
     
