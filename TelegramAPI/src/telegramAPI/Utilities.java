@@ -36,9 +36,12 @@ public class Utilities {
     
  //parser e il contrario   
     
-public void sendMessage(String messaggio, int id) throws MalformedURLException, IOException
+    
+ long lastID=0;
+    
+public void sendMessage(String messaggio, long id) throws MalformedURLException, IOException
 {
-    String url="https://api.telegram.org/bot5122281672:AAHK1whl7VGxCdHszxOYBR8UwtD07SFadvg/sendMessage?chat_id="+Integer.toString(id)+"&text="+URLEncoder.encode(messaggio, StandardCharsets.UTF_8);
+    String url="https://api.telegram.org/bot5122281672:AAHK1whl7VGxCdHszxOYBR8UwtD07SFadvg/sendMessage?chat_id="+Long.toString(id)+"&text="+URLEncoder.encode(messaggio, StandardCharsets.UTF_8);
     BufferedReader in = null;
     URL url2;
     url2 = new URL(url);
@@ -71,6 +74,56 @@ public int getID() throws MalformedURLException, IOException
     }
     
     return idUtente;
+}
+
+//ritorno un lista di tutti i messaggi che ho ricevuto
+public List<ParametriUpdate> getUpdates() throws MalformedURLException, IOException
+{
+    ParametriUpdate parametri= new ParametriUpdate();
+    String url="";
+    
+    if(lastID==0)
+    {
+     url="https://api.telegram.org/bot5122281672:AAHK1whl7VGxCdHszxOYBR8UwtD07SFadvg/getUpdates?";
+    }else{
+     url="https://api.telegram.org/bot5122281672:AAHK1whl7VGxCdHszxOYBR8UwtD07SFadvg/getUpdates?offset="+(lastID+1);
+    }
+    
+    BufferedReader in = null;
+    URL url2;
+    url2 = new URL(url);
+    in = new BufferedReader(new InputStreamReader(url2.openStream()));
+    String line;
+    String jsonString="";
+            while ((line = in.readLine()) != null) {
+                jsonString+=line;
+            }
+            in.close();
+     
+    JSONObject obj = new JSONObject(jsonString);  
+    JSONArray arr = obj.getJSONArray("result");        
+    int idUtente=0;
+    
+  List<ParametriUpdate> lista=new  ArrayList<ParametriUpdate>();
+  
+    for (int i = 0; i < arr.length(); i++)
+    {
+     // idUtente=arr.getJSONObject(i).getJSONObject("message").getJSONObject("from").getInt("id");
+      parametri.setUpdate_id(arr.getJSONObject(i).getLong("update_id"));
+      parametri.setMessageID(arr.getJSONObject(i).getJSONObject("message").getInt("message_id"));
+      parametri.setText(arr.getJSONObject(i).getJSONObject("message").getString("text"));
+      parametri.setID(arr.getJSONObject(i).getJSONObject("message").getJSONObject("from").getInt("id"));
+      
+      if(parametri.getUpdate_id()>lastID)
+      {
+          lastID=parametri.getUpdate_id();
+      }
+      lista.add(parametri); 
+      
+     
+    }
+    
+    return lista;
 }
 
 public String getText() throws MalformedURLException, IOException

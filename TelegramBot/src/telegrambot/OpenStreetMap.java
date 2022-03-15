@@ -29,7 +29,7 @@ public class OpenStreetMap {
 
        
     
-public void rispondi(String citta,int idDestinatario)
+public void rispondi(String citta,long idDestinatario)
 {
         BufferedReader in = null;
         PrintWriter out;

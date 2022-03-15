@@ -26,14 +26,16 @@ import telegramAPI.Utilities;
  */
 public class TelegramBot {
 
+  //  public static int lastId = 0;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-       
+        
         while(true)
         {
+           //ThreadAscolto th1= new ThreadAscolto(lastId);
            ThreadAscolto th1= new ThreadAscolto();
            th1.start();
             try {
