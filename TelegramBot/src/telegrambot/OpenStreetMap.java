@@ -6,6 +6,9 @@
 package telegrambot;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -25,10 +28,27 @@ import telegramAPI.Utilities;
  * @author camagni_riccardo
  */
 public class OpenStreetMap {
-   
-
-       
     
+private String file="dati.csv";
+   
+public String toCSV(long idDestinatario,String lati, String longi)
+     {
+         String tmp= "";
+         tmp= Long.toString(idDestinatario)+";"+lati+";"+longi+"\n";
+         return tmp;
+     }
+     
+    public void salvaFile(String testo) throws IOException
+    {
+        FileWriter fw = new FileWriter(file, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(testo);
+        bw.newLine();
+        bw.close();
+       
+    }
+       
+   
 public void rispondi(String citta,long idDestinatario)
 {
         BufferedReader in = null;
@@ -52,7 +72,7 @@ public void rispondi(String citta,long idDestinatario)
             in.close();
             out.close();
         } catch (IOException ex) {
-            Logger.getLogger(TelegramBot.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Pubblicita.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         MyXMLOperations xml = new MyXMLOperations();
@@ -67,6 +87,9 @@ public void rispondi(String citta,long idDestinatario)
             
                Place info = dati.get(0);
                 invio="Luogo "+info.getDisplay_name()+"\n"+"Latitudine "+ info.getLatitudine()+"\n"+"Longitudine "+info.getLongitudine()+"\n";
+                
+                salvaFile(toCSV(idDestinatario,info.getLatitudine() , info.getLongitudine()));
+                
                 oggetto.sendMessage(invio, idDestinatario);
                 
                 
@@ -107,8 +130,95 @@ public void rispondi(String citta,long idDestinatario)
       
 
 }
-    
+  
 
+public String getLatitudine(String cittaRicercata) {
+
+     BufferedReader in = null;
+        PrintWriter out;
+        
+        Utilities oggetto=new Utilities();
+        
+        try {
+            out = new PrintWriter("xml/Place.xml");
+
+            URL url;
+           
+            String url2="https://nominatim.openstreetmap.org/search?q=+"+URLEncoder.encode(cittaRicercata, StandardCharsets.UTF_8)+"&format=xml&polygon_geojson=1&addressdetails=1";  
+            url= new URL (url2);
+            in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+                out.println(line);
+            }
+            in.close();
+            out.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Pubblicita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        MyXMLOperations xml = new MyXMLOperations();
+        // String xsd = "xml/grammatica.xsd";
+        String xmlFile = "xml/Place.xml";
+        String latitudine="";
+        try {
+            List<Place> dati = new ArrayList<>();
+            dati = xml.parseDocument(xmlFile);
+               Place info = dati.get(0);
+               latitudine=info.getLatitudine();
     
+         System.out.println("---------------------------------------------------");
+        } catch (ParserConfigurationException | SAXException | IOException exception) {
+            System.out.println(exception);
+        }
+
+        return latitudine;
+}
+public String getLongitudine(String cittaRicercata) {
+
+     BufferedReader in = null;
+        PrintWriter out;
+        
+        Utilities oggetto=new Utilities();
+        
+        try {
+            out = new PrintWriter("xml/Place.xml");
+
+            URL url;
+           
+            String url2="https://nominatim.openstreetmap.org/search?q=+"+URLEncoder.encode(cittaRicercata, StandardCharsets.UTF_8)+"&format=xml&polygon_geojson=1&addressdetails=1";  
+            url= new URL (url2);
+            in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+                out.println(line);
+            }
+            in.close();
+            out.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Pubblicita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        MyXMLOperations xml = new MyXMLOperations();
+        // String xsd = "xml/grammatica.xsd";
+        String xmlFile = "xml/Place.xml";
+        String longitudine="";
+        try {
+            List<Place> dati = new ArrayList<>();
+            dati = xml.parseDocument(xmlFile);
+               Place info = dati.get(0);
+               longitudine=info.getLongitudine();
     
+         System.out.println("---------------------------------------------------");
+        } catch (ParserConfigurationException | SAXException | IOException exception) {
+            System.out.println(exception);
+        }
+
+        return longitudine;
+}
+
+
+
 }

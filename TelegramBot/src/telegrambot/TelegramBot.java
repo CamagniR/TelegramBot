@@ -5,32 +5,19 @@
  */
 package telegrambot;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import org.xml.sax.SAXException;
-import telegramAPI.Utilities;
 
 /**
  *
- * @author camagni_riccardo
+ * @author Riccardo
  */
 public class TelegramBot {
 
-  //  public static int lastId = 0;
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         // TODO code application logic here
         
         while(true)
@@ -41,20 +28,17 @@ public class TelegramBot {
             try {
                 th1.join();
             } catch (InterruptedException ex) {
-                Logger.getLogger(TelegramBot.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Pubblicita.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 th1.sleep(5000);
             } catch (InterruptedException ex) {
-                Logger.getLogger(TelegramBot.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Pubblicita.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-               
-          
-           
-           
-           
-       /*    
+        
+        
+            /*    
         BufferedReader in = null;
         PrintWriter out;
         
@@ -119,8 +103,8 @@ public class TelegramBot {
             System.out.println(exception);
         }
                */
-        }
-     
-   
-}
         
+        
+    }
+    
+}
